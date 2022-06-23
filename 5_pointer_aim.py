@@ -124,7 +124,9 @@ BUBBLE_HEIGHT = 62
 
 
 # 화살표 관련 변수
-to_angle = 0  # 좌우로 움직일 각도정보
+# to_angle = 0  # 좌우로 움직일 각도정보
+to_angle_left = 0
+to_angle_right = 0  # 해당 방향으로 움직일 각도 정보
 angle_speed = 1.5  # 1.5도씩 움직임
 
 bubble_group = pygame.sprite.Group()
@@ -141,16 +143,18 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                to_angle += angle_speed
+                to_angle_left += angle_speed
             elif event.key == pygame.K_RIGHT:
-                to_angle -= angle_speed
+                to_angle_right -= angle_speed
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                to_angle = 0
+            if event.key == pygame.K_LEFT:
+                to_angle_left = 0
+            elif event.key == pygame.K_RIGHT:
+                to_angle_right = 0
 
     screen.blit(background, (0, 0))
     bubble_group.draw(screen)
-    pointer.rotate(to_angle)
+    pointer.rotate(to_angle_right + to_angle_left)
     pointer.draw(screen)
     pygame.display.update()
 
